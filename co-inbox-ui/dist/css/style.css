@@ -83,6 +83,25 @@
 	color: #33414d;
 }
 
+/* Two equal-height columns (align Proposed Solution with Problem Description) */
+.crColumns {
+	gap: 1rem;
+	width: 100%;
+}
+.crColumns > .crCol {
+	flex: 1 1 480px;
+	box-sizing: border-box;
+}
+
+
+/* Approval comment thread */
+.crCommentList .sapMFeedListItem {
+	padding: 0.5rem 0;
+}
+.crCommentList .sapMFeedListItemText {
+	color: #33414d;
+}
+
 .myCustomInfoState-REJECTED .sapMFeedListItemInfo { color: var(--sapErrorColor); }
 .myCustomInfoState-SENT_BACK .sapMFeedListItemInfo { color: var(--sapWarningColor); }
 .myCustomInfoState-APPROVED .sapMFeedListItemInfo { color: var(--sapSuccessColor); }
@@ -100,3 +119,5 @@
     border-top: none !important;
     box-shadow: none !important;
 }
+
+

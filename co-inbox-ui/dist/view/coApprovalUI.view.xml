@@ -1,8 +1,11 @@
-<mvc:View controllerName="coinboxui.controller.coApprovalUI" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
-     xmlns="sap.m" 	
-	 xmlns:l="sap.ui.layout"
+<mvc:View
+	controllerName="coinboxui.controller.coApprovalUI"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
-	xmlns:core="sap.ui.core">
+	xmlns:core="sap.ui.core"
+	displayBlock="true">
     <App id="app">
         <pages>
 	<Page id="page" showHeader="false" busy="{ui>/busy}" class="sapUiContentPadding crPage">
@@ -31,7 +34,7 @@
 					<Button icon="sap-icon://refresh" type="Transparent"
 						tooltip="{i18n>btnRefresh}" press=".onRefresh"/>
 				</HBox>
-				<Text text="{context>/changeRequestTitle} \u2014 {context>/projectName}" class="crSubtitle"/>
+				<Text text="{context>/changeRequestTitle} {context>/projectName}" class="crSubtitle"/>
 			</VBox>
 
 			<!-- live-fetch problem banner -->
@@ -42,10 +45,10 @@
 				class="sapUiSmallMarginBottom"/>
 
 			<!-- ============ Two columns ============ -->
-			<l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="1" vSpacing="1">
+			<FlexBox wrap="Wrap" alignItems="Stretch" class="crColumns">
 
 				<!-- ===== LEFT: Problem Description ===== -->
-				<Panel class="crCard">
+				<Panel class="crCard crCol">
 					<headerToolbar>
 						<OverflowToolbar>
 							<core:Icon src="sap-icon://document-text" class="sapUiTinyMarginEnd"/>
@@ -115,7 +118,7 @@
 				</Panel>
 
 				<!-- ===== RIGHT: Proposed Solution ===== -->
-				<Panel class="crCard">
+				<Panel class="crCard crCol">
 					<headerToolbar>
 						<OverflowToolbar>
 							<core:Icon src="sap-icon://money-bills" class="sapUiTinyMarginEnd"/>
@@ -145,33 +148,43 @@
 						<Panel headerText="{i18n>secCost}" class="crCostPanel">
 							<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
 								labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
-								columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+								columnsXL="1" columnsL="1" columnsM="1" adjustLabelSpan="false"
 								class="crForm crCostForm">
 								<f:content>
-									<Label text="{i18n>lblFreight}"/>
-									<Text text="{ path: 'context>/costBreakdown/freightCost', formatter: '.formatter.amount' }" textAlign="End"/>
-									<Label text="{i18n>lblField}"/>
-									<Text text="{ path: 'context>/costBreakdown/fieldCost', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblJoist}" visible="{ path: 'context>/costBreakdown/joist', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/joist', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/joist', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblDeck}" visible="{ path: 'context>/costBreakdown/deck', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/deck', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/deck', formatter: '.formatter.hasValue' }"/>
 
-									<Label text="{i18n>lblInternal}"/>
-									<Text text="{ path: 'context>/costBreakdown/internalCost', formatter: '.formatter.amount' }" textAlign="End"/>
-									<Label text="{i18n>lblLoading}"/>
-									<Text text="{ path: 'context>/costBreakdown/loadingCost', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblOtherProduct}" visible="{ path: 'context>/costBreakdown/otherProduct', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/otherProduct', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/otherProduct', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblGrating}" visible="{ path: 'context>/costBreakdown/grating', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/grating', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/grating', formatter: '.formatter.hasValue' }"/>
 
-									<Label text="{i18n>lblJoistMarkup}"/>
-									<Text text="{ path: 'context>/costBreakdown/joistMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
-									<Label text="{i18n>lblDeckMarkup}"/>
-									<Text text="{ path: 'context>/costBreakdown/deckMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblFreight}" visible="{ path: 'context>/costBreakdown/freightCost', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/freightCost', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/freightCost', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblField}" visible="{ path: 'context>/costBreakdown/fieldCost', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/fieldCost', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/fieldCost', formatter: '.formatter.hasValue' }"/>
 
-									<Label text="{i18n>lblOpMarkup}"/>
-									<Text text="{ path: 'context>/costBreakdown/opMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
-									<Label text="{i18n>lblGratingMarkup}"/>
-									<Text text="{ path: 'context>/costBreakdown/gratingMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblInternal}" visible="{ path: 'context>/costBreakdown/internalCost', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/internalCost', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/internalCost', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblLoading}" visible="{ path: 'context>/costBreakdown/loadingCost', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/loadingCost', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/loadingCost', formatter: '.formatter.hasValue' }"/>
 
-									<Label text="{i18n>lblSalesTax}"/>
-									<Text text="{ path: 'context>/costBreakdown/salesTax', formatter: '.formatter.amount' }" textAlign="End"/>
-									<Label text="{i18n>lblCurrency}"/>
-									<Text text="{ path: 'context>/costBreakdown/currency', formatter: '.formatter.orDash' }"/>
+									<Label text="{i18n>lblJoistMarkup}" visible="{ path: 'context>/costBreakdown/joistMarkup', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/joistMarkup', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/joistMarkup', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblDeckMarkup}" visible="{ path: 'context>/costBreakdown/deckMarkup', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/deckMarkup', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/deckMarkup', formatter: '.formatter.hasValue' }"/>
+
+									<Label text="{i18n>lblOpMarkup}" visible="{ path: 'context>/costBreakdown/opMarkup', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/opMarkup', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/opMarkup', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblGratingMarkup}" visible="{ path: 'context>/costBreakdown/gratingMarkup', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/gratingMarkup', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/gratingMarkup', formatter: '.formatter.hasValue' }"/>
+
+									<Label text="{i18n>lblSalesTax}" visible="{ path: 'context>/costBreakdown/salesTax', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/salesTax', formatter: '.formatter.amount' }" textAlign="End" visible="{ path: 'context>/costBreakdown/salesTax', formatter: '.formatter.hasValue' }"/>
+									<Label text="{i18n>lblCurrency}" visible="{ path: 'context>/costBreakdown/currency', formatter: '.formatter.hasValue' }"/>
+									<Text text="{ path: 'context>/costBreakdown/currency', formatter: '.formatter.orDash' }" visible="{ path: 'context>/costBreakdown/currency', formatter: '.formatter.hasValue' }"/>
 								</f:content>
 							</f:SimpleForm>
 
@@ -188,7 +201,7 @@
 
 						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
 							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
-							columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+							columnsXL="2" columnsL="2" columnsM="2" adjustLabelSpan="false"
 							class="crForm sapUiSmallMarginTop">
 							<f:content>
 								<Label text="{i18n>lblDetailingHour}"/>
@@ -209,7 +222,7 @@
 						</f:SimpleForm>
 					</content>
 				</Panel>
-			</l:Grid>
+			</FlexBox>
 
 			<!-- Approval comments: history (read-only) + this level's input -->
 			<Panel headerText="{i18n>secComments}" class="crCard sapUiSmallMarginTop">
@@ -236,15 +249,26 @@
 						placeholder="{i18n>phComment}"
 						liveChange=".onCommentChange"/>
 				</content>
+				 <Panel class="footerSpacer" visible="true"/>
 			</Panel>
-            <Panel class="footerSpacer" visible="true"/>
+
 		</content>
-		<footer>
+
+		<!-- Standalone footer (hidden when the inbox provides its own actions) -->
+	<!-- 	<footer>
+			<OverflowToolbar visible="{= ${ui>/standalone} === true }">
+				<ToolbarSpacer/>
+				<Button text="{i18n>btnSendBack}" press=".onSendBack"/>
+				<Button text="{i18n>btnReject}" type="Reject" press=".onReject"/>
+				<Button text="{i18n>btnApprove}" type="Accept" press=".onApprove"/>
+			</OverflowToolbar>
+		</footer>  -->
+				<footer>
             <Bar class="transparentFooter" >
 			
             </Bar>
         </footer>
 	</Page>
-        </pages>
+	        </pages>
     </App>
 </mvc:View>

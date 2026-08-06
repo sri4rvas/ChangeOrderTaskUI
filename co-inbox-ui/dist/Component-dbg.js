@@ -116,6 +116,24 @@ sap.ui.define(
           this._refreshTaskList();
         },
 
+
+		_buildOutboundContext: function (oDecision) {
+			// Round-trip the FULL context this task received, then overlay only the
+			// fields this level changed. Preserves every input attribute (approver
+			// chain, index, totals, CR container fields, ...) so nothing is lost
+			// between approval steps, independent of runtime merge granularity.
+			var oBase = {};
+			try { oBase = JSON.parse(this._sInboundContext || "{}"); } catch (e) { oBase = {}; }
+
+			return Object.assign(oBase, {
+				changeRequestNo: this._oCr.getProperty("/changeRequestNo"),
+				status: this._oCr.getProperty("/status"),
+				resolutionDate: this._oCr.getProperty("/resolutionDate") || null,
+				comments: this._oCr.getProperty("/comments") || [],   // updated thread
+				_decision: oDecision
+			});
+		},
+
         _patchTaskInstance: function (approvalStatus) {
           var data = {
             status: "COMPLETED",

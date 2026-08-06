@@ -4,11 +4,18 @@ sap.ui.define([
 	"use strict";
 
 	var COST_KEYS = [
+		"joist", "deck", "otherProduct", "grating",
 		"freightCost", "fieldCost", "internalCost", "loadingCost",
 		"joistMarkup", "deckMarkup", "opMarkup", "gratingMarkup", "salesTax"
 	];
 
 	return {
+
+		/** true when a value is present (not null / undefined / empty). Drives
+		 *  conditional visibility of cost rows. Zero counts as a value. */
+		hasValue: function (vValue) {
+			return vValue !== null && vValue !== undefined && vValue !== "";
+		},
 
 		/** Renders a value or an em-dash when empty/null. Mirrors the mockup. */
 		orDash: function (vValue) {

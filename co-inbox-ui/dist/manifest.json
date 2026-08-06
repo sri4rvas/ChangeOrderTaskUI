@@ -293,6 +293,18 @@
                     "type": "object",
                     "title": "Cost Breakdown",
                     "properties": {
+                        "joist": {
+                            "type": "number"
+                        },
+                        "deck": {
+                            "type": "number"
+                        },
+                        "otherProduct": {
+                            "type": "number"
+                        },
+                        "grating": {
+                            "type": "number"
+                        },
                         "freightCost": {
                             "type": "number"
                         },
