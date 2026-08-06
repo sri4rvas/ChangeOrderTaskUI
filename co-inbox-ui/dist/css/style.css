@@ -1,0 +1,102 @@
+.crPage {
+	background-color: #f5f7fa;
+}
+.crHeader {
+	padding: 0.25rem 0 0.75rem 0;
+}
+.crSubtitle {
+	color: #5a6872;
+	font-size: 0.875rem;
+	margin-top: 0.125rem;
+}
+
+/* Panels styled as cards, with the two accent bars from the mockup */
+.crCard.sapMPanel {
+	background: #ffffff;
+	border: 1px solid #e5e9ee;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.crForm .sapUiRFLContainer {
+	padding-bottom: 0.25rem;
+}
+.crForm .sapMLabel {
+	color: #6a7783;
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+}
+.crMinorLabel {
+	color: #6a7783;
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+}
+
+/* Reason / Description dashed callout */
+.crReasonBox {
+	border: 1px dashed #a9bce0;
+	background: #f4f8ff;
+	border-radius: 8px;
+	padding: 0.75rem 1rem;
+	margin-top: 0.75rem;
+}
+.crReasonTitle {
+	color: #3a5a9a;
+	font-weight: bold;
+	font-size: 0.75rem;
+	letter-spacing: 0.04em;
+}
+
+/* Cost breakdown box */
+.crCostPanel.sapMPanel {
+	background: #fafbfc;
+	border: 1px solid #e5e9ee;
+	border-radius: 8px;
+	margin-top: 0.5rem;
+}
+.crCostForm .sapMText {
+	font-variant-numeric: tabular-nums;
+}
+
+/* Yellow total bar */
+.crTotalBar {
+	background: #ffd54a;
+	border-radius: 8px;
+	padding: 0.75rem 1rem;
+	margin: 0.5rem 0.5rem 0.25rem 0.5rem;
+}
+.crTotalLabel {
+	font-weight: bold;
+	color: #4a3b00;
+	letter-spacing: 0.04em;
+}
+.crTotalValue {
+	font-weight: bold;
+	font-size: 1.375rem;
+	color: #3d3100;
+}
+
+/* Approval comment thread */
+.crCommentList .sapMFeedListItem {
+	padding: 0.5rem 0;
+}
+.crCommentList .sapMFeedListItemText {
+	color: #33414d;
+}
+
+.myCustomInfoState-REJECTED .sapMFeedListItemInfo { color: var(--sapErrorColor); }
+.myCustomInfoState-SENT_BACK .sapMFeedListItemInfo { color: var(--sapWarningColor); }
+.myCustomInfoState-APPROVED .sapMFeedListItemInfo { color: var(--sapSuccessColor); }
+
+.footerSpacer {
+    height: 3.75rem;
+}
+
+.sapMPage > .sapMPageEnableScrolling {
+    padding-bottom: 3.75rem;
+}
+
+.transparentFooter {
+    background-color: transparent !important;
+    border-top: none !important;
+    box-shadow: none !important;
+}

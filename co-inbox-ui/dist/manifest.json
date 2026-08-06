@@ -1,0 +1,517 @@
+{
+    "_version": "1.26.0",
+    "sap.app": {
+        "id": "coinboxui",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.5"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.8.4",
+            "toolsId": "a0be0ec9-eb18-4d4d-9557-3f262a28b950"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "sap/opu/odata/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.82.2",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "coinboxui.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "coinboxui.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RoutecoApprovalUI",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetcoApprovalUI"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetcoApprovalUI": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "coApprovalUI",
+                    "viewName": "coApprovalUI"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "coinboxui.view.coApprovalUI",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "com.nucor.co"
+    },
+    "sap.bpa.task": {
+        "_version": "1.0.0",
+        "category": "approval",
+        "outcomes": [
+            {
+                "id": "approve",
+                "label": "Approve"
+            },
+            {
+                "id": "reject",
+                "label": "Reject"
+            }
+        ],
+        "inputs": {
+            "$schema": "http://json-schema.org/draft-07/schema",
+            "title": "Change Request (task inputs mapped from process context)",
+            "type": "object",
+            "required": [
+                "changeRequestNo"
+            ],
+            "properties": {
+                "changeRequestNo": {
+                    "type": "string",
+                    "title": "Change Request No"
+                },
+                "changeRequestType": {
+                    "type": "string",
+                    "title": "Change Request Type"
+                },
+                "changeRequestTitle": {
+                    "type": "string",
+                    "title": "Title"
+                },
+                "projectName": {
+                    "type": "string",
+                    "title": "Project"
+                },
+                "customerCoNo": {
+                    "type": "string",
+                    "title": "Customer CO No"
+                },
+                "jobId": {
+                    "type": "string",
+                    "title": "Job ID"
+                },
+                "supplyPlant": {
+                    "type": "string",
+                    "title": "Supply Plant"
+                },
+                "salesOrder": {
+                    "type": "string",
+                    "title": "Sales Order"
+                },
+                "status": {
+                    "type": "string",
+                    "title": "Status"
+                },
+                "priority": {
+                    "type": "string",
+                    "title": "Priority"
+                },
+                "vpmId": {
+                    "type": "string",
+                    "title": "VPM Id"
+                },
+                "vpmName": {
+                    "type": "string",
+                    "title": "VPM Name"
+                },
+                "contactName": {
+                    "type": "string",
+                    "title": "Contact Name"
+                },
+                "company": {
+                    "type": "string",
+                    "title": "Company"
+                },
+                "email": {
+                    "type": "string",
+                    "title": "Email"
+                },
+                "phone": {
+                    "type": "string",
+                    "title": "Phone"
+                },
+                "fax": {
+                    "type": "string",
+                    "title": "Fax"
+                },
+                "reasonDescription": {
+                    "type": "string",
+                    "title": "Reason / Description"
+                },
+                "findings": {
+                    "type": "string",
+                    "title": "Findings"
+                },
+                "correctiveAction": {
+                    "type": "string",
+                    "title": "Corrective Action"
+                },
+                "csrType": {
+                    "type": "string",
+                    "title": "CSR Type"
+                },
+                "coFormOutput": {
+                    "type": "string",
+                    "title": "CO Form Output"
+                },
+                "detailingHour": {
+                    "type": "number",
+                    "title": "Detailing Hour"
+                },
+                "designHour": {
+                    "type": "number",
+                    "title": "Design Hour"
+                },
+                "estimatedDelayDays": {
+                    "type": "number",
+                    "title": "Estimated Delay (days)"
+                },
+                "requestReturnDate": {
+                    "type": "string",
+                    "format": "date",
+                    "title": "Request Return Date"
+                },
+                "resolutionDate": {
+                    "type": "string",
+                    "format": "date",
+                    "title": "Resolution Date"
+                },
+                "resolution": {
+                    "type": "string",
+                    "title": "Resolution"
+                },
+                "levelLabel": {
+                    "type": "string",
+                    "title": "Approval Level"
+                },
+                "currentApprover": {
+                    "type": "object",
+                    "title": "Current Approver",
+                    "properties": {
+                        "roleCode": {
+                            "type": "string"
+                        },
+                        "roleName": {
+                            "type": "string"
+                        },
+                        "group": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string"
+                        },
+                        "userName": {
+                            "type": "string",
+                            "title": "User Name"
+                        },
+                        "index": {
+                            "type": "number"
+                        },
+                        "isFinal": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "costBreakdown": {
+                    "type": "object",
+                    "title": "Cost Breakdown",
+                    "properties": {
+                        "freightCost": {
+                            "type": "number"
+                        },
+                        "fieldCost": {
+                            "type": "number"
+                        },
+                        "internalCost": {
+                            "type": "number"
+                        },
+                        "loadingCost": {
+                            "type": "number"
+                        },
+                        "joistMarkup": {
+                            "type": "number"
+                        },
+                        "deckMarkup": {
+                            "type": "number"
+                        },
+                        "opMarkup": {
+                            "type": "number"
+                        },
+                        "gratingMarkup": {
+                            "type": "number"
+                        },
+                        "salesTax": {
+                            "type": "number"
+                        },
+                        "currency": {
+                            "type": "string"
+                        },
+                        "totalAmount": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "comments": {
+                    "type": "array",
+                    "title": "Approval Comments (history)",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "level": {
+                                "type": "string"
+                            },
+                            "roleName": {
+                                "type": "string"
+                            },
+                            "author": {
+                                "type": "string"
+                            },
+                            "decision": {
+                                "type": "string"
+                            },
+                            "comment": {
+                                "type": "string"
+                            },
+                            "at": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "snapshot": {
+                                "type": "object",
+                                "properties": {
+                                    "total": {
+                                        "type": "number"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "source": {
+                                        "type": "string"
+                                    },
+                                    "byRole": {
+                                        "type": "string"
+                                    },
+                                    "capturedAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "costBreakdown": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "roleDirectory": {
+                    "type": "array",
+                    "title": "Role Directory",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "roleCode": {
+                                "type": "string"
+                            },
+                            "roleName": {
+                                "type": "string"
+                            },
+                            "group": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "userName": {
+                                "type": "string",
+                                "title": "User Name"
+                            },
+                            "index": {
+                                "type": "number"
+                            },
+                            "isFinal": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                },
+                "approverRoles": {
+                    "type": "array",
+                    "title": "Approver Roles",
+                    "items": {
+                        "type": "object",
+                        "title": "DecisionOuput",
+                        "properties": {
+                            "approverRoles": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "outputs": {
+            "$schema": "http://json-schema.org/draft-07/schema",
+            "title": "output (written back to process context on completion)",
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "title": "Status"
+                },
+                "resolutionDate": {
+                    "type": "string",
+                    "format": "date",
+                    "title": "Resolution Date"
+                },
+                "comments": {
+                    "type": "array",
+                    "title": "Approval Comments (updated)",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "level": {
+                                "type": "string"
+                            },
+                            "roleName": {
+                                "type": "string"
+                            },
+                            "author": {
+                                "type": "string"
+                            },
+                            "decision": {
+                                "type": "string"
+                            },
+                            "comment": {
+                                "type": "string"
+                            },
+                            "at": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "snapshot": {
+                                "type": "object",
+                                "properties": {
+                                    "total": {
+                                        "type": "number"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "source": {
+                                        "type": "string"
+                                    },
+                                    "byRole": {
+                                        "type": "string"
+                                    },
+                                    "capturedAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "costBreakdown": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "_decision": {
+                    "type": "object",
+                    "title": "Decision",
+                    "properties": {
+                        "outcome": {
+                            "type": "string"
+                        },
+                        "comment": {
+                            "type": "string"
+                        },
+                        "reviewedBy": {
+                            "type": "string"
+                        },
+                        "reviewedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

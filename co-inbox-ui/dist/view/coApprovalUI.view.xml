@@ -1,0 +1,250 @@
+<mvc:View controllerName="coinboxui.controller.coApprovalUI" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
+     xmlns="sap.m" 	
+	 xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <App id="app">
+        <pages>
+	<Page id="page" showHeader="false" busy="{ui>/busy}" class="sapUiContentPadding crPage">
+		<content>
+
+			<!-- ============ Header strip ============ -->
+			<VBox class="crHeader">
+				<HBox alignItems="Center" wrap="Wrap">
+					<Title level="H2"
+						text="{context>/changeRequestType} CO: {context>/changeRequestNo}"
+						class="sapUiTinyMarginEnd"/>
+					<ObjectStatus
+						text="{context>/status}"
+						state="{ path: 'context>/status', formatter: '.formatter.statusState' }"
+						class="sapUiTinyMarginEnd"/>
+					<ObjectStatus
+						text="{context>/priority}"
+						state="{ path: 'context>/priority', formatter: '.formatter.priorityState' }"
+						icon="sap-icon://alert"
+						visible="{= ${context>/priority} === 'Critical' }"/>
+					<ToolbarSpacer/>
+					<ObjectStatus
+						text="{ path: 'ui>/dataSource', formatter: '.formatter.sourceText' }"
+						state="{ path: 'ui>/dataSource', formatter: '.formatter.sourceState' }"
+						class="sapUiTinyMarginEnd"/>
+					<Button icon="sap-icon://refresh" type="Transparent"
+						tooltip="{i18n>btnRefresh}" press=".onRefresh"/>
+				</HBox>
+				<Text text="{context>/changeRequestTitle} \u2014 {context>/projectName}" class="crSubtitle"/>
+			</VBox>
+
+			<!-- live-fetch problem banner -->
+			<MessageStrip
+				visible="{= !!${ui>/liveError} }"
+				text="{ui>/liveError}"
+				type="Warning" showIcon="true" showCloseButton="true"
+				class="sapUiSmallMarginBottom"/>
+
+			<!-- ============ Two columns ============ -->
+			<l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="1" vSpacing="1">
+
+				<!-- ===== LEFT: Problem Description ===== -->
+				<Panel class="crCard">
+					<headerToolbar>
+						<OverflowToolbar>
+							<core:Icon src="sap-icon://document-text" class="sapUiTinyMarginEnd"/>
+							<Title text="{i18n>secProblem}" level="H3"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<content>
+						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
+							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
+							columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+							class="crForm">
+							<f:content>
+								<Label text="{i18n>lblCrType}"/>
+								<Text text="{ path: 'context>/changeRequestType', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblCrNo}"/>
+								<Text text="{ path: 'context>/changeRequestNo', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblCustomerCoNo}"/>
+								<Text text="{ path: 'context>/customerCoNo', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblJobId}"/>
+								<Text text="{ path: 'context>/jobId', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblSupplyPlant}"/>
+								<Text text="{ path: 'context>/supplyPlant', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblSalesOrder}"/>
+								<Text text="{ path: 'context>/salesOrder', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblCrTitle}"/>
+								<Text text="{ path: 'context>/changeRequestTitle', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblStatus}"/>
+								<Text text="{ path: 'context>/status', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblPriority}"/>
+								<Text text="{ path: 'context>/priority', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblVpm}"/>
+								<Text text="{ parts: ['context>/vpmId','context>/vpmName'], formatter: '.formatter.vpm' }"/>
+								<Label text="{i18n>lblContact}"/>
+								<Text text="{ path: 'context>/contactName', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblCompany}"/>
+								<Text text="{ path: 'context>/company', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblEmail}"/>
+								<Link text="{context>/email}" href="mailto:{context>/email}" visible="{= !!${context>/email} }"/>
+
+								<Label text="{i18n>lblPhone}"/>
+								<Text text="{ path: 'context>/phone', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblFax}"/>
+								<Text text="{ path: 'context>/fax', formatter: '.formatter.orDash' }"/>
+							</f:content>
+						</f:SimpleForm>
+
+						<!-- Reason / Description callout -->
+						<VBox class="crReasonBox">
+							<HBox alignItems="Center" class="sapUiTinyMarginBottom">
+								<core:Icon src="sap-icon://message-information" class="sapUiTinyMarginEnd"/>
+								<Text text="{i18n>lblReason}" class="crReasonTitle"/>
+							</HBox>
+							<Text text="{ path: 'context>/reasonDescription', formatter: '.formatter.orDash' }"/>
+						</VBox>
+
+						<VBox class="sapUiSmallMarginTop">
+							<Text text="{i18n>lblFindings}" class="crMinorLabel"/>
+							<Text text="{ path: 'context>/findings', formatter: '.formatter.orDash' }"/>
+						</VBox>
+					</content>
+				</Panel>
+
+				<!-- ===== RIGHT: Proposed Solution ===== -->
+				<Panel class="crCard">
+					<headerToolbar>
+						<OverflowToolbar>
+							<core:Icon src="sap-icon://money-bills" class="sapUiTinyMarginEnd"/>
+							<Title text="{i18n>secSolution}" level="H3"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<content>
+						<VBox>
+							<Text text="{i18n>lblCorrectiveAction}" class="crMinorLabel"/>
+							<Text text="{ path: 'context>/correctiveAction', formatter: '.formatter.orDash' }"
+								class="sapUiSmallMarginBottom"/>
+						</VBox>
+
+						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
+							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
+							columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+							class="crForm">
+							<f:content>
+								<Label text="{i18n>lblCsrType}"/>
+								<Text text="{ path: 'context>/csrType', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblCoFormOutput}"/>
+								<Text text="{ path: 'context>/coFormOutput', formatter: '.formatter.orDash' }"/>
+							</f:content>
+						</f:SimpleForm>
+
+						<!-- Cost breakdown -->
+						<Panel headerText="{i18n>secCost}" class="crCostPanel">
+							<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
+								labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
+								columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+								class="crForm crCostForm">
+								<f:content>
+									<Label text="{i18n>lblFreight}"/>
+									<Text text="{ path: 'context>/costBreakdown/freightCost', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblField}"/>
+									<Text text="{ path: 'context>/costBreakdown/fieldCost', formatter: '.formatter.amount' }" textAlign="End"/>
+
+									<Label text="{i18n>lblInternal}"/>
+									<Text text="{ path: 'context>/costBreakdown/internalCost', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblLoading}"/>
+									<Text text="{ path: 'context>/costBreakdown/loadingCost', formatter: '.formatter.amount' }" textAlign="End"/>
+
+									<Label text="{i18n>lblJoistMarkup}"/>
+									<Text text="{ path: 'context>/costBreakdown/joistMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblDeckMarkup}"/>
+									<Text text="{ path: 'context>/costBreakdown/deckMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
+
+									<Label text="{i18n>lblOpMarkup}"/>
+									<Text text="{ path: 'context>/costBreakdown/opMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblGratingMarkup}"/>
+									<Text text="{ path: 'context>/costBreakdown/gratingMarkup', formatter: '.formatter.amount' }" textAlign="End"/>
+
+									<Label text="{i18n>lblSalesTax}"/>
+									<Text text="{ path: 'context>/costBreakdown/salesTax', formatter: '.formatter.amount' }" textAlign="End"/>
+									<Label text="{i18n>lblCurrency}"/>
+									<Text text="{ path: 'context>/costBreakdown/currency', formatter: '.formatter.orDash' }"/>
+								</f:content>
+							</f:SimpleForm>
+
+							<!-- Total strip -->
+							<HBox justifyContent="SpaceBetween" alignItems="Center" class="crTotalBar">
+								<HBox alignItems="Center">
+									<core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
+									<Text text="{i18n>lblTotal}" class="crTotalLabel"/>
+								</HBox>
+								<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }"
+									class="crTotalValue"/>
+							</HBox>
+						</Panel>
+
+						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
+							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
+							columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+							class="crForm sapUiSmallMarginTop">
+							<f:content>
+								<Label text="{i18n>lblDetailingHour}"/>
+								<Text text="{ path: 'context>/detailingHour', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblDesignHour}"/>
+								<Text text="{ path: 'context>/designHour', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblDelay}"/>
+								<Text text="{ path: 'context>/estimatedDelayDays', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblReturnDate}"/>
+								<Text text="{ path: 'context>/requestReturnDate', formatter: '.formatter.orDash' }"/>
+
+								<Label text="{i18n>lblResolutionDate}"/>
+								<Text text="{ path: 'context>/resolutionDate', formatter: '.formatter.orDash' }"/>
+								<Label text="{i18n>lblResolution}"/>
+								<Text text="{ path: 'context>/resolution', formatter: '.formatter.orDash' }"/>
+							</f:content>
+						</f:SimpleForm>
+					</content>
+				</Panel>
+			</l:Grid>
+
+			<!-- Approval comments: history (read-only) + this level's input -->
+			<Panel headerText="{i18n>secComments}" class="crCard sapUiSmallMarginTop">
+				<content>
+					<!-- Previous approvers' comments, shown to the current approver -->
+					<List
+						items="{context>/comments}"
+						noDataText="{i18n>noComments}"
+						showSeparators="Inner"
+						class="crCommentList">
+						<FeedListItem
+							showIcon="false"
+							sender="{ parts: ['context>roleName', 'context>author'], formatter: '.formatter.commentSender' }"
+							timestamp="{ path: 'context>at', formatter: '.formatter.commentTime' }"
+							info="{ parts: ['context>decision', 'context>snapshot/total', 'context>snapshot/currency'], formatter: '.formatter.decisionWithAmount' }"
+							class="myCustomInfoState-{context>decision}"
+							text="{ path: 'context>comment', formatter: '.formatter.orDashComment' }"/>
+					</List>
+
+					<!-- Current approver's comment for this level -->
+					<Label text="{i18n>lblComment}" class="sapUiSmallMarginTop"/>
+					<TextArea width="100%" rows="3" growing="true"
+						value="{ui>/currentComment}"
+						placeholder="{i18n>phComment}"
+						liveChange=".onCommentChange"/>
+				</content>
+			</Panel>
+            <Panel class="footerSpacer" visible="true"/>
+		</content>
+		<footer>
+            <Bar class="transparentFooter" >
+			
+            </Bar>
+        </footer>
+	</Page>
+        </pages>
+    </App>
+</mvc:View>

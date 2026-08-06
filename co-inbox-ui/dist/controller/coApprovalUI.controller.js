@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/model/json/JSONModel","sap/ui/core/format/DateFormat","sap/m/MessageBox","sap/m/MessageToast","coinboxui/model/formatter"],function(e,o,t,n,r,s){"use strict";return e.extend("coinboxui.controller.coApprovalUI",{formatter:s,onInit:function(){this.getView().setModel(this.getOwnerComponent().getModel("context"),"context")}})});
+//# sourceMappingURL=coApprovalUI.controller.js.map
