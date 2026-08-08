@@ -6,8 +6,9 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
 	displayBlock="true">
-    <App id="app">
-        <pages>
+
+	<App id="app">
+		<pages>
 	<Page id="page" showHeader="false" busy="{ui>/busy}" class="sapUiContentPadding crPage">
 		<content>
 
@@ -34,7 +35,7 @@
 					<Button icon="sap-icon://refresh" type="Transparent"
 						tooltip="{i18n>btnRefresh}" press=".onRefresh"/>
 				</HBox>
-				<Text text="{context>/changeRequestTitle} {context>/projectName}" class="crSubtitle"/>
+				<Text text="{context>/changeRequestTitle} \u2014 {context>/projectName}" class="crSubtitle"/>
 			</VBox>
 
 			<!-- live-fetch problem banner -->
@@ -45,10 +46,10 @@
 				class="sapUiSmallMarginBottom"/>
 
 			<!-- ============ Two columns ============ -->
-			<FlexBox wrap="Wrap" alignItems="Stretch" class="crColumns">
+			<l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="1" vSpacing="1">
 
 				<!-- ===== LEFT: Problem Description ===== -->
-				<Panel class="crCard crCol">
+				<Panel class="crCard">
 					<headerToolbar>
 						<OverflowToolbar>
 							<core:Icon src="sap-icon://document-text" class="sapUiTinyMarginEnd"/>
@@ -118,7 +119,7 @@
 				</Panel>
 
 				<!-- ===== RIGHT: Proposed Solution ===== -->
-				<Panel class="crCard crCol">
+				<Panel class="crCard">
 					<headerToolbar>
 						<OverflowToolbar>
 							<core:Icon src="sap-icon://money-bills" class="sapUiTinyMarginEnd"/>
@@ -222,7 +223,7 @@
 						</f:SimpleForm>
 					</content>
 				</Panel>
-			</FlexBox>
+			</l:Grid>
 
 			<!-- Approval comments: history (read-only) + this level's input -->
 			<Panel headerText="{i18n>secComments}" class="crCard sapUiSmallMarginTop">
@@ -238,7 +239,7 @@
 							sender="{ parts: ['context>roleName', 'context>author'], formatter: '.formatter.commentSender' }"
 							timestamp="{ path: 'context>at', formatter: '.formatter.commentTime' }"
 							info="{ parts: ['context>decision', 'context>snapshot/total', 'context>snapshot/currency'], formatter: '.formatter.decisionWithAmount' }"
-							class="myCustomInfoState-{context>decision}"
+							 class="myCustomInfoState-{context>decision}"
 							text="{ path: 'context>comment', formatter: '.formatter.orDashComment' }"/>
 					</List>
 
@@ -249,26 +250,16 @@
 						placeholder="{i18n>phComment}"
 						liveChange=".onCommentChange"/>
 				</content>
-				 <Panel class="footerSpacer" visible="true"/>
 			</Panel>
 
 		</content>
 
 		<!-- Standalone footer (hidden when the inbox provides its own actions) -->
-	<!-- 	<footer>
-			<OverflowToolbar visible="{= ${ui>/standalone} === true }">
-				<ToolbarSpacer/>
-				<Button text="{i18n>btnSendBack}" press=".onSendBack"/>
-				<Button text="{i18n>btnReject}" type="Reject" press=".onReject"/>
-				<Button text="{i18n>btnApprove}" type="Accept" press=".onApprove"/>
-			</OverflowToolbar>
-		</footer>  -->
-				<footer>
-            <Bar class="transparentFooter" >
-			
-            </Bar>
-        </footer>
+		<footer>
+			<Bar class="transparentFooter">
+			</Bar>
+		</footer>
 	</Page>
-	        </pages>
-    </App>
+		</pages>
+	</App>
 </mvc:View>
