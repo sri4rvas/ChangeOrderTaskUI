@@ -14,7 +14,7 @@ sap.ui.define([
 		/** true when a value is present (not null / undefined / empty). Drives
 		 *  conditional visibility of cost rows. Zero counts as a value. */
 		hasValue: function (vValue) {
-			return vValue !== null && vValue !== undefined && vValue !== "";
+			return vValue !== null && vValue !== undefined && vValue !== "" && vValue !== 0;
 		},
 
 		/** Renders a value or an em-dash when empty/null. Mirrors the mockup. */

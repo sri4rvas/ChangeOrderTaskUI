@@ -35,7 +35,7 @@
 					<Button icon="sap-icon://refresh" type="Transparent"
 						tooltip="{i18n>btnRefresh}" press=".onRefresh"/>
 				</HBox>
-				<Text text="{context>/changeRequestTitle} \u2014 {context>/projectName}" class="crSubtitle"/>
+				<Text text="{context>/changeRequestTitle} {context>/projectName}" class="crSubtitle"/>
 			</VBox>
 
 			<!-- live-fetch problem banner -->
@@ -200,27 +200,73 @@
 							</HBox>
 						</Panel>
 
-						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
-							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
-							columnsXL="2" columnsL="2" columnsM="2" adjustLabelSpan="false"
-							class="crForm sapUiSmallMarginTop">
-							<f:content>
-								<Label text="{i18n>lblDetailingHour}"/>
-								<Text text="{ path: 'context>/detailingHour', formatter: '.formatter.orDash' }"/>
-								<Label text="{i18n>lblDesignHour}"/>
-								<Text text="{ path: 'context>/designHour', formatter: '.formatter.orDash' }"/>
+						<f:Form editable="false" class="crForm sapUiSmallMarginTop">
+							<f:layout>
+								<f:ResponsiveGridLayout
+									labelSpanXL="4"
+									labelSpanL="4"
+									labelSpanM="4"
+									labelSpanS="12"
+									columnsXL="2"
+									columnsL="2"
+									columnsM="1"
+									adjustLabelSpan="false"/>
+							</f:layout>
 
-								<Label text="{i18n>lblDelay}"/>
-								<Text text="{ path: 'context>/estimatedDelayDays', formatter: '.formatter.orDash' }"/>
-								<Label text="{i18n>lblReturnDate}"/>
-								<Text text="{ path: 'context>/requestReturnDate', formatter: '.formatter.orDash' }"/>
+							<f:formContainers>
+								<!-- Left column -->
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>lblDetailingHour}">
+											<f:fields>
+												<Text text="{path:'context>/detailingHour',
+													formatter:'.formatter.orDash'}"/>
+											</f:fields>
+										</f:FormElement>
 
-								<Label text="{i18n>lblResolutionDate}"/>
-								<Text text="{ path: 'context>/resolutionDate', formatter: '.formatter.orDash' }"/>
-								<Label text="{i18n>lblResolution}"/>
-								<Text text="{ path: 'context>/resolution', formatter: '.formatter.orDash' }"/>
-							</f:content>
-						</f:SimpleForm>
+										<f:FormElement label="{i18n>lblDelay}">
+											<f:fields>
+												<Text text="{path:'context>/estimatedDelayDays',
+													formatter:'.formatter.orDash'}"/>
+											</f:fields>
+										</f:FormElement>
+
+										<f:FormElement label="{i18n>lblResolutionDate}">
+											<f:fields>
+												<Text text="{path:'context>/resolutionDate',
+													formatter:'.formatter.orDash'}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+
+								<!-- Right column -->
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="{i18n>lblDesignHour}">
+											<f:fields>
+												<Text text="{path:'context>/designHour',
+													formatter:'.formatter.orDash'}"/>
+											</f:fields>
+										</f:FormElement>
+
+										<f:FormElement label="{i18n>lblReturnDate}">
+											<f:fields>
+												<Text text="{path:'context>/requestReturnDate',
+													formatter:'.formatter.orDash'}"/>
+											</f:fields>
+										</f:FormElement>
+
+										<f:FormElement label="{i18n>lblResolution}">
+											<f:fields>
+												<Text text="{path:'context>/resolution',
+													formatter:'.formatter.orDash'}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
 					</content>
 				</Panel>
 			</l:Grid>

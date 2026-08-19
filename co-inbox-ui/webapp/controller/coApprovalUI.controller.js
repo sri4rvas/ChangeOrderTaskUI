@@ -1,9 +1,9 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",	"sap/ui/model/json/JSONModel",
-	"sap/ui/core/format/DateFormat",
-	"sap/m/MessageBox",
-	"sap/m/MessageToast",
-	"coinboxui/model/formatter"
+    "sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel",
+    "sap/ui/core/format/DateFormat",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+    "coinboxui/model/formatter"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -15,6 +15,11 @@ sap.ui.define([
             formatter: formatter,
             onInit: function () {
                 this.getView().setModel(this.getOwnerComponent().getModel("context"), "context");
+                this.getView().setModel(this.getOwnerComponent().getModel("ui"), "ui");
+            },
+            onCommentChange: function (oEvent) {
+                this.getOwnerComponent()._sComment = oEvent.getParameter("value");
             }
+
         });
     });
