@@ -28,12 +28,12 @@
 						icon="sap-icon://alert"
 						visible="{= ${context>/priority} === 'Critical' }"/>
 					<ToolbarSpacer/>
-					<ObjectStatus
+					<!-- <ObjectStatus
 						text="{ path: 'ui>/dataSource', formatter: '.formatter.sourceText' }"
 						state="{ path: 'ui>/dataSource', formatter: '.formatter.sourceState' }"
 						class="sapUiTinyMarginEnd"/>
 					<Button icon="sap-icon://refresh" type="Transparent"
-						tooltip="{i18n>btnRefresh}" press=".onRefresh"/>
+						tooltip="{i18n>btnRefresh}" press=".onRefresh"/> -->
 				</HBox>
 				<Text text="{context>/changeRequestTitle} {context>/projectName}" class="crSubtitle"/>
 			</VBox>

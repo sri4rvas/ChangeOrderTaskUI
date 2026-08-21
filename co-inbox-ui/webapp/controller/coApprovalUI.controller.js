@@ -43,7 +43,7 @@ sap.ui.define([
                 //docCat = view.getModel('currentSalesDocument').getProperty('/DocumentCategory');
 
                 let sRead = `/co_formSet('${issueID}')/$value`;
-               // window.open(model.sServiceUrl + sRead);
+                return window.open(model.sServiceUrl + sRead);
 
                 var oLink = document.createElement("a");
                 oLink.href = model.sServiceUrl + sRead;
@@ -52,19 +52,6 @@ sap.ui.define([
                 document.body.appendChild(oLink);
                 oLink.click();
                 document.body.removeChild(oLink);
-
-
-                // ds.getCoPDF(this, issueID).then((blob) => {
-                //     var oLink = document.createElement("a");
-                //     oLink.href = sObjectUrl;
-                //     oLink.download = "ChangeOrder_" + issueID + ".pdf";
-                //     document.body.appendChild(oLink);
-                //     oLink.click();
-                //     document.body.removeChild(oLink);
-                //     URL.revokeObjectURL(sObjectUrl);
-                // }).catch(err => {
-                //     MessageBox.error(err);
-                // })
 
             }
 
