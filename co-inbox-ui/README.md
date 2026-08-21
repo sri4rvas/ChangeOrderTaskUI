@@ -34,3 +34,9 @@ Change Order Approval workflow task UI application
 1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
 
 
+<HTML
+                    xmlns="sap.ui.core"
+                    visible="{= ${approverProgress>isLast} === false }"
+                    content="&lt;div style='width:2rem;height:2px;background-color:#89919a;display:inline-block;vertical-align:middle;margin:0 0.25rem;'&gt;&lt;/div&gt;"/>
+
+

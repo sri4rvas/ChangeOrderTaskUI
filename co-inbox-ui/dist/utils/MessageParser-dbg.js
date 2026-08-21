@@ -35,7 +35,7 @@ sap.ui.define([], function (logger) {
 					msg += ((msg) ? "\n" : "") + data;
 					return msg;
 				}
-                // checking existance whether any error response
+				// checking existance whether any error response
 				if (data.response && data.response.body) {
 					try {// parse string format of error into JSON object
 						response = $.parseJSON(data.response.body);
@@ -47,7 +47,11 @@ sap.ui.define([], function (logger) {
 				}
 				else if (data.responseText) {
 					try {
-						response = $.parseJSON(data.responseText);
+						if (typeof (data.responseText) === 'string') {
+							response = data.responseText;
+						} else {
+							response = $.parseJSON(data.responseText);
+						}
 					} catch (err) {
 						if (data.message) {
 							msg += ((msg) ? "\n" : "") + data.message;
@@ -66,7 +70,7 @@ sap.ui.define([], function (logger) {
 					errordetails = error.innererror.errordetails;
 					for (var i = 0, len = errordetails.length; i < len; i++) {
 						if (errordetails[i].message && errordetails[i].message.length > 0) {
-							if(errordetails[i].message === 'An exception was raised')  continue;
+							if (errordetails[i].message === 'An exception was raised') continue;
 							if (msg.length !== 0) {
 								msg += "\n";
 							}

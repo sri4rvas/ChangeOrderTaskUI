@@ -1,0 +1,63 @@
+<!--
+  ApproverProgress.fragment.xml
+
+  Horizontal "line with bullets" approver stepper for the top of the
+  co-inbox Task UI page. Bind fragmentModel (see ApproverProgress
+  controller logic) to a local JSON model, e.g.:
+
+      this.byId("approverProgress").setModel(oApproverModel, "approverProgress");
+
+  Each bullet shows a role name with a colored status icon:
+    Approved        -> green filled circle (accept)
+    Current approver -> blue/orange pulsing circle (person-placeholder)
+    Next / pending   -> grey outline circle (circle-task-2)
+
+  Include via:
+    <core:Fragment fragmentName="nucor.coinbox.fragment.ApproverProgress" type="XML"/>
+-->
+<HBox xmlns="sap.m"
+      xmlns:core="sap.ui.core"
+      id="approverProgressBar"
+      justifyContent="Center"
+      alignItems="Center"
+      wrap="Wrap"
+      class="sapUiSmallMarginBottom">
+
+    <items>
+        <HBox items="{approverProgress>/steps}" alignItems="Center">
+            <items>
+                <!-- Single template root per step: bullet + label + connector -->
+                <HBox alignItems="Center">
+                    <items>
+                        <VBox alignItems="Center" class="sapUiTinyMarginBeginEnd">
+                            <items>
+                                <core:Icon
+                                    src="{approverProgress>icon}"
+                                    color="{approverProgress>iconColor}"
+                                    size="1.5rem"
+                                    class="sapUiTinyMarginBottom"
+                                    tooltip="{approverProgress>tooltip}"/>
+                                <Text
+                                    text="{approverProgress>roleName}"
+                                    textAlign="Center"
+                                    class="{approverProgress>labelClass}"/>
+                                <Text
+                                    text="{approverProgress>userName}"
+                                    textAlign="Center"
+                                    class="sapUiTinyText"/>
+                            </items>
+                        </VBox>
+
+                        <!-- Connector between bullets, hidden after the last item -->
+                        <core:Icon
+                            src="sap-icon://arrow-right"
+                            color="Neutral"
+                            size="1rem"
+                            visible="{= ${approverProgress>isLast} === false }"
+                            class="sapUiTinyMarginBeginEnd"/>
+                    </items>
+                </HBox>
+            </items>
+        </HBox>
+    </items>
+</HBox>

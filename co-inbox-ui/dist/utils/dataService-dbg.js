@@ -22,34 +22,23 @@ sap.ui.define(
             /* =========================================================== */
             /* Read Operations                                             */
             /* =========================================================== */
-
-            /**
-             * Reads location header and item data for the selected location.
-             * Stores a deep-cloned copy in biModel for change comparison.
-             *
-             * @param {object} vc - View controller reference
-             * @param {string} query - Search query (currently unused)
-             */
-            searchMaterials: function (vc, query) {
+            getCoPDF: async function (vc, issueID) {
                 return new Promise(function (resolve, reject) {
                     let oModel = vc.getOwnerComponent().getModel();
+                    let sRead = `/co_formSet('${issueID}')/$value`;
 
-                    oModel.read(`/MaterialSet(guid'${vc.guid}')`, {
-                        urlParameters: {
-                            "$expand": "CountItemSet,CountHeader"
-                        },
-                        success: function (oData) {
-                            // Store before-image snapshot
-                            let clonedData = structuredClone(oData);
-                            vc.getOwnerComponent().getModel("biModel").setData(clonedData);
-                            resolve(oData);
+                    oModel.read(sRead, {
+                        success: function (oResponse) {
+                            var oBlob = oResponse.blob();
+                            resolve(oBlob)
                         },
                         error: function (oError) {
-                            reject(oError);
+                            reject(mp.ParseError(oError));
                         }
                     });
                 });
             },
+
 
             /* =========================================================== */
             /* Validation & Lookup                                         */
@@ -81,7 +70,7 @@ sap.ui.define(
                             }
                         },
                         error: function (oError) {
-                            reject(oError);
+                            reject(mp.ParseError(oError));
                         }
                     });
                 });
@@ -177,12 +166,12 @@ sap.ui.define(
                     let cloneFields = ["CountLocId", "Upc", "CountQty"];
 
                     let afterImage = util.pickFields(
-                        structuredClone(vc.getOwnerComponent().getModel('locModel').getData().CountItemSet.results),
+                        structuredClone(vc.getOwnerComponent().getModel('locModel').getData()),
                         cloneFields
                     );
 
                     let beforeImage = util.pickFields(
-                        structuredClone(vc.getOwnerComponent().getModel('biModel').getData().CountItemSet.results),
+                        structuredClone(vc.getOwnerComponent().getModel('biModel').getData()),
                         cloneFields
                     );
 
@@ -253,25 +242,26 @@ sap.ui.define(
              *
              * @param {object} vc - View controller reference
              */
-            executeAction: function (cc,comments) {
+            executeAction: function (cc, comments) {
                 return new Promise(function (resolve, reject) {
                     let oModel = cc.getModel();
                     let isApproved = cc.getModel("context").getProperty("/approved");
                     let currentApprover = cc.getModel("context").getProperty("/currentApprover") || {};
+                    oModel.setTokenHandlingEnabled(true);
                     oModel.callFunction("/ExecuteAction", {
                         method: "POST",
                         headers: {
                             "Content-Type": 'application/json'
                         },
                         urlParameters: {
-                            objectType: currentApprover.isFinal ? 'I':'A',
+                            objectType: currentApprover.isFinal ? 'I' : 'A',
                             actionType: isApproved ? 'A' : 'R',
                             actionVal: currentApprover.activityKey,
-                            comments:comments
+                            comments: comments
                         },
                         success: function (data, response) {
                             if (currentApprover.isFinal) {
-
+                                resolve(data);
                             } else {
                                 resolve(data);
                             }

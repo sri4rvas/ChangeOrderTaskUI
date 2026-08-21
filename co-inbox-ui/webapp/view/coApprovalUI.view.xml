@@ -11,7 +11,7 @@
 		<pages>
 	<Page id="page" showHeader="false" busy="{ui>/busy}" class="sapUiContentPadding crPage">
 		<content>
-
+            <core:Fragment fragmentName="coinboxui.fragments.ApproverProgress" type="XML"/>
 			<!-- ============ Header strip ============ -->
 			<VBox class="crHeader">
 				<HBox alignItems="Center" wrap="Wrap">
@@ -141,7 +141,9 @@
 								<Label text="{i18n>lblCsrType}"/>
 								<Text text="{ path: 'context>/csrType', formatter: '.formatter.orDash' }"/>
 								<Label text="{i18n>lblCoFormOutput}"/>
-								<Text text="{ path: 'context>/coFormOutput', formatter: '.formatter.orDash' }"/>
+								<!-- <Text text="{ path: 'context>/coFormOutput', formatter: '.formatter.orDash' }"/> -->
+								<!-- <Button icon = "sap-icon://pdf-attachment" width="5px" press = 'handleGetChangeOrderPdf' type= "Reject" tooltip = 'Click here to view Change Order pdf Document' /> -->
+							    <core:Icon src="sap-icon://pdf-attachment" press='handleGetChangeOrderPdf' activeColor="#800000" color="#dc143c" width="10px" tooltip = 'Click here to view Change Order pdf Document'/>
 							</f:content>
 						</f:SimpleForm>
 

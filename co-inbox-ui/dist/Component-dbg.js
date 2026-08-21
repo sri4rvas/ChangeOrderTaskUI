@@ -7,9 +7,10 @@ sap.ui.define(
     "sap/ui/core/format/DateFormat",
     "coinboxui/model/formatter",
     "coinboxui/utils/dataService",
+    "coinboxui/utils/ApproverProgressHelper",
     "sap/m/MessageBox"
   ],
-  function (UIComponent, Device, models, JSONModel, DateFormat, formatter, ds, MessageBox) {
+  function (UIComponent, Device, models, JSONModel, DateFormat, formatter, ds,aph, MessageBox) {
     "use strict";
 
     return UIComponent.extend(
@@ -33,6 +34,8 @@ sap.ui.define(
 
           // set the device model
           this.setModel(models.createDeviceModel(), "device");
+          "approverProgress"
+          this.setModel(new sap.ui.model.json.JSONModel({ steps: [] }), "approverProgress");
           this._setUiModels();
           this._setTaskModels();
 
@@ -95,9 +98,11 @@ sap.ui.define(
             this._getTaskInstancesBaseURL() + "/context"
           );
 
-           taskContextModel.attachRequestCompleted(function (oEvent) {
+          taskContextModel.attachRequestCompleted(function (oEvent) {
             this._sInboundContext = Object.assign({}, taskContextModel.getData())
-            console.log("Context model data:", taskContextModel.getData());
+            let oSteps = aph.buildModel(this._sInboundContext);
+            this.getModel("approverProgress").setProperty("/steps", oSteps);
+          //  console.log("Context model data:", taskContextModel.getData());
           }.bind(this));
           taskContextModel.attachRequestFailed(function (oEvent) {
             console.log("Context model failed to load:", oEvent.getParameters());
@@ -132,14 +137,14 @@ sap.ui.define(
 
         completeTask: function (approvalStatus) {
           if (!this._oBusyDialog) {
-            this._oBusyDialog = new sap.m.BusyDialog({ title: "Please wait", text: (approvalStatus)?"Submitting your approval...":"Submitting your rejection" });
+            this._oBusyDialog = new sap.m.BusyDialog({ title: "Please wait", text: (approvalStatus) ? "Submitting your approval..." : "Submitting your rejection" });
           }
 
-          this.getModel("context").setProperty("/approved", approvalStatus);          
+          this.getModel("context").setProperty("/approved", approvalStatus);
           this._checkBeforeAction().then(() => {
             this._oBusyDialog.open();
-            ds.executeAction(this,(this._sComment) ? this._sComment : (approvalStatus)?'Approved':'').then((data) => {
-              let decision = this._processBeforCompleteTask(approvalStatus, (this._sComment) ? this._sComment : (approvalStatus)?'Approved':'');
+            ds.executeAction(this, (this._sComment) ? this._sComment : (approvalStatus) ? 'Approved' : '').then((data) => {
+              let decision = this._processBeforCompleteTask(approvalStatus, (this._sComment) ? this._sComment : (approvalStatus) ? 'Approved' : '');
               this._patchTaskInstance(approvalStatus, decision);
               this._refreshTaskList();
             }).catch((err) => {
@@ -209,7 +214,12 @@ sap.ui.define(
             this.getModel("context").setProperty("/status", "Approved");
             this.getModel("context").setProperty("/resolutionDate",
               DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date()));
+          } else {
+            this.getModel("context").setProperty("/status", "Rejected");
+            this.getModel("context").setProperty("/resolutionDate",
+              DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }).format(new Date()));
           }
+
           return oDecision;
           // var sTaskId = this._getTaskId();
 

@@ -72,7 +72,12 @@
             "": {
                 "dataSource": "mainService",
                 "preload": true,
-                "settings": {}
+                "settings": {
+                    "defaultBindingMode": "OneWay",
+                    "defaultCountMode": "None",
+                    "useBatch": true,
+                    "disableHeadRequestForToken": true
+                }
             }
         },
         "resources": {
@@ -391,6 +396,35 @@
                                         "type": "object"
                                     }
                                 }
+                            }
+                        }
+                    }
+                },
+                "approvedBy": {
+                    "type": "array",
+                    "title": "approved by",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "roleCode": {
+                                "type": "string"
+                            },
+                            "roleName": {
+                                "type": "string"
+                            },
+                            "approvedByUser": {
+                                "type": "string",
+                                "title": "Name of Approver"
+                            },
+                            "index": {
+                                "type": "number"
+                            },
+                            "approvedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "activityKey": {
+                                "type": "string"
                             }
                         }
                     }

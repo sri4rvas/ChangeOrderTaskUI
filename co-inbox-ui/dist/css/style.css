@@ -23,10 +23,12 @@
 	padding-bottom: 0.25rem;
 }
 .crForm .sapMLabel {
-	color: #6a7783;
-	font-size: 0.75rem;
-	letter-spacing: 0.02em;
+    color: #60b3ff;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
 }
+
+
 .crMinorLabel {
 	color: #6a7783;
 	font-size: 0.75rem;
