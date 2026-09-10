@@ -194,7 +194,7 @@ sap.ui.define(
           var aComments = (this.getModel("context").getProperty("/comments") || []).slice();
           aComments.push({
             level: this.getModel("context").getProperty("/levelLabel") || oCur.roleName || "",
-            roleName: oCur.roleName || "",
+            roleName: oCur.roleName + ': ' + oCur.userName  || "",
             author: sReviewer,
             decision: sOutcome ? 'approved' : 'rejected',
             comment: sComment || "",

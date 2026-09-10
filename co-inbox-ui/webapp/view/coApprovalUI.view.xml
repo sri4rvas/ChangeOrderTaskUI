@@ -16,7 +16,7 @@
 			<VBox class="crHeader">
 				<HBox alignItems="Center" wrap="Wrap">
 					<Title level="H2"
-						text="{context>/changeRequestType} CO: {context>/changeRequestNo}"
+						text="{context>/changeRequestType}# : {context>/changeRequestNo}"
 						class="sapUiTinyMarginEnd"/>
 					<ObjectStatus
 						text="{context>/status}"
@@ -143,7 +143,7 @@
 								<Label text="{i18n>lblCoFormOutput}"/>
 								<!-- <Text text="{ path: 'context>/coFormOutput', formatter: '.formatter.orDash' }"/> -->
 								<!-- <Button icon = "sap-icon://pdf-attachment" width="5px" press = 'handleGetChangeOrderPdf' type= "Reject" tooltip = 'Click here to view Change Order pdf Document' /> -->
-							    <core:Icon src="sap-icon://pdf-attachment" press='handleGetChangeOrderPdf' activeColor="#800000" color="#dc143c" width="10px" tooltip = 'Click here to view Change Order pdf Document'/>
+							    <core:Icon src="sap-icon://pdf-attachment" press='handleGetChangeOrderPdf' activeColor="#800000" color="#dc143c" width="15px" tooltip = 'Click here to view Change Order pdf Document'/>
 							</f:content>
 						</f:SimpleForm>
 

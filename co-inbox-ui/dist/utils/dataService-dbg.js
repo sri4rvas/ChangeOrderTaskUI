@@ -254,10 +254,11 @@ sap.ui.define(
                             "Content-Type": 'application/json'
                         },
                         urlParameters: {
-                            objectType: currentApprover.isFinal ? 'I' : 'A',
+                            objectType: currentApprover.isFinal ? 'AI' : 'A',  //A - Acitivity , I - Issue 
                             actionType: isApproved ? 'A' : 'R',
                             actionVal: currentApprover.activityKey,
-                            comments: comments
+                            comments: comments,
+                            isFinal : currentApprover.isFinal
                         },
                         success: function (data, response) {
                             if (currentApprover.isFinal) {
