@@ -13,7 +13,7 @@
 		<content>
             <core:Fragment fragmentName="coinboxui.fragments.ApproverProgress" type="XML"/>
 			<!-- ============ Header strip ============ -->
-			<VBox class="crHeader">
+			<VBox class="crHeader sapUiSmallMarginBegin">
 				<HBox alignItems="Center" wrap="Wrap">
 					<Title level="H2"
 						text="{context>/changeRequestType}# : {context>/changeRequestNo}"
@@ -26,7 +26,7 @@
 						text="{context>/priority}"
 						state="{ path: 'context>/priority', formatter: '.formatter.priorityState' }"
 						icon="sap-icon://alert"
-						visible="{= ${context>/priority} === 'Critical' }"/>
+						visible="{= ${context>/priority} === 'Very High' }"/>
 					<ToolbarSpacer/>
 					<!-- <ObjectStatus
 						text="{ path: 'ui>/dataSource', formatter: '.formatter.sourceText' }"
@@ -112,7 +112,7 @@
 						</VBox>
 
 						<VBox class="sapUiSmallMarginTop">
-							<Text text="{i18n>lblFindings}" class="crMinorLabel"/>
+							<Label text="{i18n>lblFindings}" class="crMinorLabel"/>
 							<Text text="{ path: 'context>/findings', formatter: '.formatter.orDash' }"/>
 						</VBox>
 					</content>
@@ -128,7 +128,7 @@
 					</headerToolbar>
 					<content>
 						<VBox>
-							<Text text="{i18n>lblCorrectiveAction}" class="crMinorLabel"/>
+							<Label text="{i18n>lblCorrectiveAction}" class="crMinorLabel"/>
 							<Text text="{ path: 'context>/correctiveAction', formatter: '.formatter.orDash' }"
 								class="sapUiSmallMarginBottom"/>
 						</VBox>
@@ -143,7 +143,18 @@
 								<Label text="{i18n>lblCoFormOutput}"/>
 								<!-- <Text text="{ path: 'context>/coFormOutput', formatter: '.formatter.orDash' }"/> -->
 								<!-- <Button icon = "sap-icon://pdf-attachment" width="5px" press = 'handleGetChangeOrderPdf' type= "Reject" tooltip = 'Click here to view Change Order pdf Document' /> -->
-							    <core:Icon src="sap-icon://pdf-attachment" press='handleGetChangeOrderPdf' activeColor="#800000" color="#dc143c" width="15px" tooltip = 'Click here to view Change Order pdf Document'/>
+							    <core:Icon src="sap-icon://pdf-attachment" press='handleGetChangeOrderPdf'  activeColor="#800000" color="#dc143c"  size="1.7rem" width="18px" tooltip = 'Click here to view Change Order pdf Document'/>
+						        <!-- <HBox>
+								<MenuButton text="View">
+									<menu>
+										<Menu itemSelected="onMenuItemSelected">
+											<MenuItem key="preview" text="Preview" icon="sap-icon://pdf-attachment" />
+											<MenuItem key="download" text="Download" icon="sap-icon://pdf-attachment" />
+										</Menu>
+									</menu>
+								</MenuButton>
+								<PDFViewer id="pdfViewer" title="Document preview"  isTrustedSource="true" width="60%"  height="80%" error="onPdfError" />
+						        </HBox> -->
 							</f:content>
 						</f:SimpleForm>
 
@@ -194,7 +205,7 @@
 							<!-- Total strip -->
 							<HBox justifyContent="SpaceBetween" alignItems="Center" class="crTotalBar">
 								<HBox alignItems="Center">
-									<core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
+									<core:Icon src="sap-icon://currency" class="sapUiTinyMarginEnd"/>
 									<Text text="{i18n>lblTotal}" class="crTotalLabel"/>
 								</HBox>
 								<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }"
@@ -226,7 +237,8 @@
 											</f:fields>
 										</f:FormElement>
 
-										<f:FormElement label="{i18n>lblDelay}">
+										<f:FormElement xmlns:core="sap.ui.core" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }" 
+										    label="{ parts: [ { path: 'i18n>lblDelay' }, { path: 'context>/estimatedDelayType' } ], formatter: 'formatMessage' }">
 											<f:fields>
 												<Text text="{path:'context>/estimatedDelayDays',
 													formatter:'.formatter.orDash'}"/>
@@ -274,7 +286,7 @@
 			</l:Grid>
 
 			<!-- Approval comments: history (read-only) + this level's input -->
-			<Panel headerText="{i18n>secComments}" class="crCard sapUiSmallMarginTop">
+			<Panel headerText="{i18n>secComments}" class="crCard sapUiSmallMarginTop sapUiLargeMarginBottom sapUiSmallMarginBegin" width="98%">
 				<content>
 					<!-- Previous approvers' comments, shown to the current approver -->
 					<List
@@ -292,8 +304,8 @@
 					</List>
 
 					<!-- Current approver's comment for this level -->
-					<Label text="{i18n>lblComment}" class="sapUiSmallMarginTop"/>
-					<TextArea width="100%" rows="3" growing="true"
+					<Label text="{i18n>lblComment}" class="sapUiSmallMarginTop" visible="{=!${ui>/readOnly}}"/>
+					<TextArea width="100%" rows="3"  growing="true"  visible="{=!${ui>/readOnly}}"
 						value="{ui>/currentComment}"
 						placeholder="{i18n>phComment}"
 						liveChange=".onCommentChange"/>
@@ -304,10 +316,10 @@
 
 		<!-- Standalone footer (hidden when the inbox provides its own actions) -->
 		<footer>
-			<Bar class="transparentFooter">
+			<Bar class="transparentFooter" >
 			</Bar>
 		</footer>
 	</Page>
-		</pages>
-	</App>
+ </pages>
+</App>
 </mvc:View>

@@ -160,6 +160,10 @@
                     "type": "string",
                     "title": "Title"
                 },
+                "totalPrice": {
+                    "type": "string",
+                    "title": "Total Price"
+                },
                 "projectName": {
                     "type": "string",
                     "title": "Project"
@@ -246,7 +250,11 @@
                 },
                 "estimatedDelayDays": {
                     "type": "number",
-                    "title": "Estimated Delay (days)"
+                    "title": "Estimated Delay Time"
+                },
+                "estimatedDelayType": {
+                    "type": "string",
+                    "title": "Estimated Delay Type"
                 },
                 "requestReturnDate": {
                     "type": "string",

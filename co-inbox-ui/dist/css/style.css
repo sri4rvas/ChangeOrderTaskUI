@@ -22,19 +22,18 @@
 .crForm .sapUiRFLContainer {
 	padding-bottom: 0.25rem;
 }
-.crForm .sapMLabel {
+.crForm .sapMLabel2 {
     color: #60b3ff;
     font-size: 0.75rem;
     letter-spacing: 0.02em;
 }
 
-
-.crMinorLabel {
-	color: #6a7783;
-	font-size: 0.75rem;
-	letter-spacing: 0.02em;
+.crMinorLabel2
+ {
+    color: #8dff3a;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
 }
-
 /* Reason / Description dashed callout 	background: #f4f8ff;*/
 .crReasonBox {
 	border: 1px dashed #a9bce0;
@@ -57,7 +56,7 @@
 	border-radius: 8px;
 	margin-top: 0.5rem;
 }
-.crCostForm .sapMText {
+.crCostForm .sapMText2 {
 	font-variant-numeric: tabular-nums;
 }
 

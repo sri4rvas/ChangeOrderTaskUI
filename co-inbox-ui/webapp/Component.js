@@ -8,9 +8,10 @@ sap.ui.define(
     "coinboxui/model/formatter",
     "coinboxui/utils/dataService",
     "coinboxui/utils/ApproverProgressHelper",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/base/security/URLListValidator"
   ],
-  function (UIComponent, Device, models, JSONModel, DateFormat, formatter, ds,aph, MessageBox) {
+  function (UIComponent, Device, models, JSONModel, DateFormat, formatter, ds, aph, MessageBox,URLListValidator) {
     "use strict";
 
     return UIComponent.extend(
@@ -26,6 +27,11 @@ sap.ui.define(
          * @override
          */
         init: function () {
+           // Configure the URL allowlist BEFORE the root view is created
+            URLListValidator.add("https");
+            URLListValidator.add("http");
+            URLListValidator.add("ftp");
+            URLListValidator.add("blob");
           // call the base component's init function
           UIComponent.prototype.init.apply(this, arguments);
 
@@ -36,8 +42,8 @@ sap.ui.define(
           this.setModel(models.createDeviceModel(), "device");
           "approverProgress"
           this.setModel(new sap.ui.model.json.JSONModel({ steps: [] }), "approverProgress");
-          this._setUiModels();
           this._setTaskModels();
+          this._setUiModels();
 
 
 
@@ -47,7 +53,13 @@ sap.ui.define(
           // handshake and registers the footer actions. Each action delegates to
           // the view controller (which owns comment/validation/completion) via
           // the component EventBus, keeping concerns separated.
-          this._registerInboxActions();
+          if (this.getModel("task").getProperty("/Status") === "READY") {
+            this._registerInboxActions();
+          } else {
+            var inboxApi = this.getInboxAPI();
+            inboxApi.disableAllActions();
+            inboxApi.setShowFooter(false);
+          }
         },
         _registerInboxActions: function () {
 
@@ -75,6 +87,9 @@ sap.ui.define(
             this
           );
 
+          this.getInboxAPI().disableAction("CLAIM");
+          this.getInboxAPI().removeAction("CLAIM");
+
         },
         _setUiModels: function () {
 
@@ -83,8 +98,9 @@ sap.ui.define(
             busy: false,
             dataSource: "container",   // "container" | "live" | "merged"
             liveError: null,
-            readOnly: true,
-            standalone: false
+            readOnly: this.getModel("task").getProperty("/Status") !== "READY",
+            standalone: false,
+
           }), "ui");
         },
 
@@ -102,7 +118,8 @@ sap.ui.define(
             this._sInboundContext = Object.assign({}, taskContextModel.getData())
             let oSteps = aph.buildModel(this._sInboundContext);
             this.getModel("approverProgress").setProperty("/steps", oSteps);
-          //  console.log("Context model data:", taskContextModel.getData());
+            //  console.log("Context model data:", taskContextModel.getData());
+            this.getEventBus().publish("pdfPreviewChannel", "setPdfSource", { changeRequestNo: this._sInboundContext.changeRequestNo });
           }.bind(this));
           taskContextModel.attachRequestFailed(function (oEvent) {
             console.log("Context model failed to load:", oEvent.getParameters());
@@ -194,7 +211,7 @@ sap.ui.define(
           var aComments = (this.getModel("context").getProperty("/comments") || []).slice();
           aComments.push({
             level: this.getModel("context").getProperty("/levelLabel") || oCur.roleName || "",
-            roleName: oCur.roleName + ': ' + oCur.userName  || "",
+            roleName: oCur.roleName + ': ' + oCur.userName || "",
             author: sReviewer,
             decision: sOutcome ? 'approved' : 'rejected',
             comment: sComment || "",

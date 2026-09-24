@@ -66,9 +66,9 @@ sap.ui.define([
 		/** ObjectStatus state for the priority chip. */
 		priorityState: function (sPriority) {
 			switch ((sPriority || "").toLowerCase()) {
-				case "critical": return "Error";
-				case "high":     return "Warning";
-				case "medium":   return "Information";
+				case "Very High": return "Error";
+				case "High":     return "Warning";
+				case "Medium":   return "Information";
 				default:         return "None";
 			}
 		},
