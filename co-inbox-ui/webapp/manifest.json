@@ -256,7 +256,6 @@
                     "type": "string",
                     "title": "Estimated Delay Type"
                 },
-                
                 "requestReturnDate": {
                     "type": "string",
                     "format": "date",
@@ -308,46 +307,53 @@
                 },
                 "costBreakdown": {
                     "type": "object",
-                    "title": "Cost Breakdown",
+                    "title": "CostBreakdown",
                     "properties": {
-                        "joist": {
-                            "type": "number"
+                        "productLines": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "number"
+                                    },
+                                    "actualQty": {
+                                        "type": "number"
+                                    },
+                                    "tons": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
                         },
-                        "deck": {
-                            "type": "number"
-                        },
-                        "otherProduct": {
-                            "type": "number"
-                        },
-                        "grating": {
-                            "type": "number"
-                        },
-                        "freightCost": {
-                            "type": "number"
-                        },
-                        "fieldCost": {
-                            "type": "number"
-                        },
-                        "internalCost": {
-                            "type": "number"
-                        },
-                        "loadingCost": {
-                            "type": "number"
-                        },
-                        "joistMarkup": {
-                            "type": "number"
-                        },
-                        "deckMarkup": {
-                            "type": "number"
-                        },
-                        "opMarkup": {
-                            "type": "number"
-                        },
-                        "gratingMarkup": {
-                            "type": "number"
-                        },
-                        "salesTax": {
-                            "type": "number"
+                        "costLines": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "number"
+                                    },
+                                    "actualQty": {
+                                        "type": "number"
+                                    },
+                                    "tons": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
                         },
                         "currency": {
                             "type": "string"
@@ -402,7 +408,62 @@
                                         "format": "date-time"
                                     },
                                     "costBreakdown": {
-                                        "type": "object"
+                                        "type": "object",
+                                        "title": "CostBreakdown",
+                                        "properties": {
+                                            "productLines": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "key": {
+                                                            "type": "string"
+                                                        },
+                                                        "label": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "type": "number"
+                                                        },
+                                                        "actualQty": {
+                                                            "type": "number"
+                                                        },
+                                                        "tons": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "costLines": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "key": {
+                                                            "type": "string"
+                                                        },
+                                                        "label": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "type": "number"
+                                                        },
+                                                        "actualQty": {
+                                                            "type": "number"
+                                                        },
+                                                        "tons": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "currency": {
+                                                "type": "string"
+                                            },
+                                            "totalAmount": {
+                                                "type": "number"
+                                            }
+                                        }
                                     }
                                 }
                             }

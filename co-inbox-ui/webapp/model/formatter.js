@@ -1,20 +1,47 @@
 sap.ui.define([
-	"sap/ui/core/format/NumberFormat"
-], function (NumberFormat) {
+	"sap/ui/core/format/NumberFormat",
+	"coinboxui/model/costBreakdown"
+], function (NumberFormat, CostModel) {
 	"use strict";
 
-	var COST_KEYS = [
-		"joist", "deck", "otherProduct", "grating",
-		"freightCost", "fieldCost", "internalCost", "loadingCost",
-		"joistMarkup", "deckMarkup", "opMarkup", "gratingMarkup", "salesTax"
-	];
+	function hasVal(v) {
+		return v !== null && v !== undefined && v !== "";
+	}
 
 	return {
+
+		/** Product row is shown when Cost, Actual Qty or Tons has a value. */
+		lineVisible: function (vValue, vQty, vTons) {
+			return hasVal(vValue) || hasVal(vQty) || hasVal(vTons);
+		},
+
+		/** Section (header + rows) is shown when at least one line has a value. */
+		anyLineHasValue: function (aLines) {
+			return Array.isArray(aLines) && aLines.some(function (o) {
+				return o && (hasVal(o.value) || hasVal(o.actualQty) || hasVal(o.tons));
+			});
+		},
+
+		/** Column header with currency: ("Cost", "USD") -> "Cost (USD)". */
+		labelWithCurrency: function (sLabel, sCurrency) {
+			return sCurrency ? sLabel + " (" + sCurrency + ")" : sLabel;
+		},
+
+		/** Actual Qty / Tons: grouped number, up to 3 decimals, em-dash when empty. */
+		quantity: function (vValue) {
+			if (!hasVal(vValue)) { return "\u2014"; }
+			var oFmt = NumberFormat.getFloatInstance({
+				minFractionDigits: 0,
+				maxFractionDigits: 3,
+				groupingEnabled: true
+			});
+			return oFmt.format(Number(vValue));
+		},
 
 		/** true when a value is present (not null / undefined / empty). Drives
 		 *  conditional visibility of cost rows. Zero counts as a value. */
 		hasValue: function (vValue) {
-			return vValue !== null && vValue !== undefined && vValue !== "" && vValue !== 0;
+			return vValue !== null && vValue !== undefined && vValue !== "";
 		},
 
 		/** Renders a value or an em-dash when empty/null. Mirrors the mockup. */
@@ -41,10 +68,7 @@ sap.ui.define([
 		/** Currency-prefixed total, e.g. "$16,535.00". */
 		total: function (oCost) {
 			if (!oCost) { return "\u2014"; }
-			var fSum = COST_KEYS.reduce(function (fAcc, sKey) {
-				var v = oCost[sKey];
-				return fAcc + (v ? Number(v) : 0);
-			}, 0);
+			var fSum = CostModel.sum(oCost);
 			var oFmt = NumberFormat.getCurrencyInstance({
 				showMeasure: false,
 				minFractionDigits: 2,
@@ -57,18 +81,15 @@ sap.ui.define([
 		/** Numeric total used for reconciliation with the backend total. */
 		sumCosts: function (oCost) {
 			if (!oCost) { return 0; }
-			return COST_KEYS.reduce(function (fAcc, sKey) {
-				var v = oCost[sKey];
-				return fAcc + (v ? Number(v) : 0);
-			}, 0);
+			return CostModel.sum(oCost);
 		},
 
 		/** ObjectStatus state for the priority chip. */
 		priorityState: function (sPriority) {
 			switch ((sPriority || "").toLowerCase()) {
-				case "Very High": return "Error";
-				case "High":     return "Warning";
-				case "Medium":   return "Information";
+				case "critical": return "Error";
+				case "high":     return "Warning";
+				case "medium":   return "Information";
 				default:         return "None";
 			}
 		},

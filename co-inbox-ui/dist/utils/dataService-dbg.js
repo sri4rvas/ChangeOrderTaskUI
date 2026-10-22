@@ -244,6 +244,7 @@ sap.ui.define(
              */
             executeAction: function (cc, comments) {
                 return new Promise(function (resolve, reject) {
+                    return resolve(); // Stop executing below S4 Action as this is moved to BPA as it is triggered through API/Actions outside of thIS custom UI
                     let oModel = cc.getModel();
                     let isApproved = cc.getModel("context").getProperty("/approved");
                     let currentApprover = cc.getModel("context").getProperty("/currentApprover") || {};

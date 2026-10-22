@@ -125,3 +125,35 @@
 }
 
 
+/* Cost breakdown rows (array-driven). Same typography as the existing form. */
+.crCostRow {
+	padding: 0.25rem 0.5rem;
+}
+.crCostLabel.sapMLabel {
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+}
+.crCostHeadText.sapMText {
+	font-size: 0.875rem;
+	font-weight: bold;
+	letter-spacing: 0.02em;
+	display: block;
+	text-align: right;
+}
+.crCostNum.sapMText {
+	font-variant-numeric: tabular-nums;
+	display: block;
+	text-align: right;
+}
+.crCostSection {
+	margin-bottom: 0.5rem;
+}
+.crCostLines .sapMText,
+.crCostLine .sapMText {
+	font-variant-numeric: tabular-nums;
+	display: block;
+}
+.crCostLine {
+	padding: 0 0.5rem 0.5rem 0.5rem;
+}
+ 
