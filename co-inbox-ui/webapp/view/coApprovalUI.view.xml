@@ -219,14 +219,60 @@
 							</HBox> -->
  
 							<!-- Total strip -->
-							<HBox justifyContent="SpaceBetween" alignItems="Center" class="crTotalBar">
+							<!-- <HBox justifyContent="SpaceBetween" alignItems="Center" class="crTotalBar">
 								<HBox alignItems="Center">
 									<core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
 									<Text text="{i18n>lblTotal}" class="crTotalLabel"/>
 								</HBox>
 								<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }"
 									class="crTotalValue"/>
+							</HBox> -->
+
+
+	                       <!-- Total strip -->
+						<!-- <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap" class="crTotalBar">
+								<HBox alignItems="Center">
+									<core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
+									<Text text="{i18n>lblTotal}" class="crTotalLabel"/>
+								</HBox>
+								<HBox alignItems="Center">
+									<VBox alignItems="End" class="crTotalMini"
+										visible="{ path: 'context>/costBreakdown', formatter: '.formatter.hasQtyTotal' }">
+										
+										<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.qtyTotal' }" class="crTotalMiniVal"/>
+									</VBox>
+									<VBox alignItems="End" class="crTotalMini"
+										visible="{ path: 'context>/costBreakdown', formatter: '.formatter.hasTonsTotal' }">
+										
+										<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.tonsTotal' }" class="crTotalMiniVal"/>
+									</VBox>
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }"
+										class="crTotalValue"/>
+								</HBox>
+							</HBox> -->
+
+
+							<HBox justifyContent="SpaceBetween" alignItems="Center"  class="crTotalBar" >
+							      <!-- <HBox alignItems="Center"> -->
+							        <core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
+									<Text text="{i18n>lblTotal}" class="crTotalMiniVal">
+										<layoutData>
+										<FlexItemData growFactor="0" shrinkFactor="0" baseSize="55%"/>
+										</layoutData>
+									</Text>
+									<!-- </HBox> -->
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.qtyTotal' }" class="crTotalMiniVal" textAlign="End" >
+										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0"/></layoutData>
+									</Text>
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.tonsTotal' }" class="crTotalMiniVal sapUiMediumMarginBegin" textAlign="End" >
+										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0"/></layoutData>
+									</Text>
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }"  textAlign="End" class="crTotalMiniVal sapUiTinyMarginBegin">
+										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0"/></layoutData>
+									</Text>
 							</HBox>
+
+
 						</Panel>
 
 

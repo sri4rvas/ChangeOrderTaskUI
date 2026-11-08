@@ -97,6 +97,18 @@ sap.ui.define([], function () {
 		}, 0);
 	}
 
+	/** Sum of one numeric column (actualQty | tons). Returns null when no line has a value. */
+	function sumField(oCost, sField) {
+		var o = normalize(oCost), fSum = 0, bFound = false;
+		o.productLines.concat(o.costLines).forEach(function (oLine) {
+			if (oLine[sField] !== null && oLine[sField] !== undefined) {
+				fSum += oLine[sField];
+				bFound = true;
+			}
+		});
+		return bFound ? Math.round(fSum * 1000) / 1000 : null;
+	}
+
 	/** Sets a line's value by key (live S/4 merge). Creates the line if absent. */
 	function setLineValue(oCost, sKey, fValue) {
 		var aAll = (oCost.productLines || []).concat(oCost.costLines || []);
@@ -138,6 +150,8 @@ sap.ui.define([], function () {
 	return {
 		normalize: normalize,
 		sum: sum,
+		sumQty: function (o) { return sumField(o, "actualQty"); },
+		sumTons: function (o) { return sumField(o, "tons"); },
 		setLineValue: setLineValue,
 		toPayload: toPayload,
 		PRODUCT_DEFS: PRODUCT_DEFS,

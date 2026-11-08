@@ -8,6 +8,14 @@ sap.ui.define([
 		return v !== null && v !== undefined && v !== "";
 	}
 
+	function fmtQuantity(v) {
+		return NumberFormat.getFloatInstance({
+			minFractionDigits: 0,
+			maxFractionDigits: 3,
+			groupingEnabled: true
+		}).format(Number(v));
+	}
+
 	return {
 
 		/** Product row is shown when Cost, Actual Qty or Tons has a value. */
@@ -37,7 +45,21 @@ sap.ui.define([
 			});
 			return oFmt.format(Number(vValue));
 		},
-
+		/** Totals of Actual Qty / Tons across all lines (shown in the TOTAL strip). */
+		qtyTotal: function (oCost) {
+			var f = CostModel.sumQty(oCost);
+			return f === null ? "" : fmtQuantity(f);
+		},
+		tonsTotal: function (oCost) {
+			var f = CostModel.sumTons(oCost);
+			return f === null ? "" : fmtQuantity(f);
+		},
+		hasQtyTotal: function (oCost) {
+			return CostModel.sumQty(oCost) !== null;
+		},
+		hasTonsTotal: function (oCost) {
+			return CostModel.sumTons(oCost) !== null;
+		},
 		/** true when a value is present (not null / undefined / empty). Drives
 		 *  conditional visibility of cost rows. Zero counts as a value. */
 		hasValue: function (vValue) {
