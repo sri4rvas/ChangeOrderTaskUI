@@ -22,11 +22,22 @@
 						text="{context>/status}"
 						state="{ path: 'context>/status', formatter: '.formatter.statusState' }"
 						class="sapUiTinyMarginEnd"/>
+					<!-- <ObjectStatus
+						text="{context>/priority}"
+						state="{ path: 'context>/priority', formatter: '.formatter.priorityState' }"
+						icon="sap-icon://alert"
+						visible="{= ${context>/priority} === 'Very High' }"/> -->
 					<ObjectStatus
 						text="{context>/priority}"
 						state="{ path: 'context>/priority', formatter: '.formatter.priorityState' }"
 						icon="sap-icon://alert"
-						visible="{= ${context>/priority} === 'Very High' }"/>
+						visible="{ path: 'context>/priority', formatter: '.formatter.isUrgentPriority' }"
+						class="crPriorityChip sapUiTinyMarginEnd">
+						<customData>
+							<core:CustomData key="priority" writeToDom="true"
+								value="{ path: 'context>/priority', formatter: '.formatter.priorityLevel' }"/>
+						</customData>
+					</ObjectStatus>
 					<ToolbarSpacer/>
 					<!-- <ObjectStatus
 						text="{ path: 'ui>/dataSource', formatter: '.formatter.sourceText' }"
@@ -58,8 +69,13 @@
 					</headerToolbar>
 					<content>
 						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
-							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
-							columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+							labelSpanXL="12" 
+							labelSpanL="12" 
+							labelSpanM="12" 
+							labelSpanS="12"
+							columnsXL="2" 
+							columnsL="2" 
+							columnsM="2" adjustLabelSpan="false"
 							class="crForm">
 							<f:content>
 								<Label text="{i18n>lblCrType}"/>
@@ -83,7 +99,13 @@
 								<Label text="{i18n>lblStatus}"/>
 								<Text text="{ path: 'context>/status', formatter: '.formatter.orDash' }"/>
 								<Label text="{i18n>lblPriority}"/>
-								<Text text="{ path: 'context>/priority', formatter: '.formatter.orDash' }"/>
+								<!-- <Text text="{ path: 'context>/priority', formatter: '.formatter.orDash' }"/> -->
+								<Text text="{ path: 'context>/priority', formatter: '.formatter.orDash' }" class="crPriorityText">
+									<customData>
+										<core:CustomData key="priority" writeToDom="true"
+											value="{ path: 'context>/priority', formatter: '.formatter.priorityLevel' }"/>
+									</customData>
+							    </Text>
 
 								<Label text="{i18n>lblVpm}"/>
 								<Text text="{ parts: ['context>/vpmId','context>/vpmName'], formatter: '.formatter.vpm' }"/>
@@ -134,8 +156,14 @@
 						</VBox>
 
 						<f:SimpleForm editable="false" layout="ResponsiveGridLayout"
-							labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12"
-							columnsXL="2" columnsL="2" columnsM="1" adjustLabelSpan="false"
+							labelSpanXL="12" 
+							labelSpanL="12" 
+							labelSpanM="12" 
+							labelSpanS="12"
+							columnsXL="2" 
+							columnsL="2" 
+							columnsM="2" 
+							adjustLabelSpan="false"
 							class="crForm">
 							<f:content>
 								<Label text="{i18n>lblCsrType}"/>
@@ -252,15 +280,14 @@
 							</HBox> -->
 
 
-							<HBox justifyContent="SpaceBetween" alignItems="Center"  class="crTotalBar" >
-							      <!-- <HBox alignItems="Center"> -->
-							        <core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
+							<!-- <HBox justifyContent="SpaceBetween" alignItems="Center"  class="crTotalBar" >
+						           <core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
 									<Text text="{i18n>lblTotal}" class="crTotalMiniVal">
 										<layoutData>
 										<FlexItemData growFactor="0" shrinkFactor="0" baseSize="55%"/>
 										</layoutData>
 									</Text>
-									<!-- </HBox> -->
+								
 									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.qtyTotal' }" class="crTotalMiniVal" textAlign="End" >
 										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0"/></layoutData>
 									</Text>
@@ -270,8 +297,29 @@
 									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }"  textAlign="End" class="crTotalMiniVal sapUiTinyMarginBegin">
 										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0"/></layoutData>
 									</Text>
-							</HBox>
+							</HBox> -->
 
+							<!-- Total strip: same row structure as the lines above, so each total sits exactly under its column -->
+							<HBox class="crCostRow crTotalRow" alignItems="Center">
+								<items>
+									<HBox alignItems="Center">
+										<layoutData><FlexItemData growFactor="0" shrinkFactor="0" baseSize="34%"/></layoutData>
+										<items>
+											<core:Icon src="sap-icon://lead" class="sapUiTinyMarginEnd"/>
+											<Text text="{i18n>lblTotal}" class="crTotalLabel"/>
+										</items>
+									</HBox>
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.qtyTotal' }" textAlign="End" width="100%" class="crTotalValue">
+										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0" minWidth="0"/></layoutData>
+									</Text>
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.tonsTotal' }" textAlign="End" width="100%" class="crTotalValue">
+										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0" minWidth="0"/></layoutData>
+									</Text>
+									<Text text="{ path: 'context>/costBreakdown', formatter: '.formatter.total' }" textAlign="End" width="100%" class="crTotalValue">
+										<layoutData><FlexItemData growFactor="1" shrinkFactor="1" baseSize="0" minWidth="0"/></layoutData>
+									</Text>
+								</items>
+							</HBox>
 
 						</Panel>
 
@@ -286,7 +334,7 @@
 									labelSpanS="12"
 									columnsXL="2"
 									columnsL="2"
-									columnsM="1"
+									columnsM="2"
 									adjustLabelSpan="false"/>
 							</f:layout>
 

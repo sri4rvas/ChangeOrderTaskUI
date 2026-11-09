@@ -8,6 +8,17 @@ sap.ui.define([
 		return v !== null && v !== undefined && v !== "";
 	}
 
+	/** Normalizes any priority spelling to veryhigh | high | medium | low | "".
+	 *  Accepts "Very High", "VERY_HIGH", "veryHigh", "Critical", "high", ... */
+	function priorityLevel(s) {
+		var k = String(s || "").toLowerCase().replace(/[^a-z]/g, "");
+		if (k === "veryhigh" || k === "critical" || k === "urgent") { return "Very High"; }
+		if (k === "high") { return "High"; }
+		if (k === "medium" || k === "normal") { return "medium"; }
+		if (k === "low" || k === "verylow") { return "low"; }
+		return "";
+	}
+
 	function fmtQuantity(v) {
 		return NumberFormat.getFloatInstance({
 			minFractionDigits: 0,
@@ -17,7 +28,16 @@ sap.ui.define([
 	}
 
 	return {
-
+		/** Value written to the DOM as data-priority (drives the CSS flash). */
+		priorityLevel: function (sPriority) {
+			return priorityLevel(sPriority);
+		},
+ 
+		/** Chip is shown (and flashes) for Very High / High (and Critical). */
+		isUrgentPriority: function (sPriority) {
+			var s = priorityLevel(sPriority);
+			return s === "Very High" || s === "High";
+		},
 		/** Product row is shown when Cost, Actual Qty or Tons has a value. */
 		lineVisible: function (vValue, vQty, vTons) {
 			return hasVal(vValue) || hasVal(vQty) || hasVal(vTons);

@@ -75,9 +75,10 @@
 /*	color: #3d3100; */
 .crTotalValue {
 	font-weight: bold;
-	font-size: 1.375rem;
+	font-size: 1.2rem;
 
 }
+  
 .crTotalMini {
 	font-weight: bold;
 }
@@ -90,6 +91,61 @@
 	font-size: 1rem;	
 	font-variant-numeric: tabular-nums;
 }
+
+/* Yellow total row. It reuses .crCostRow (same side padding and column sizes as the
+   product lines), so Actual Qty / Tons / price totals sit exactly under their columns. */
+.crCostRow.crTotalRow {
+	background: #e8bf1f;
+	border-radius: 8px;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+	margin-top: 0.5rem;
+	container-type: inline-size;
+	container-name: crtotal;
+}
+
+/* The totals use the same recipe as the Cost values above (width 100%, right-aligned),
+   so their right edges are the same box edge. Font size follows the row width so a large
+   total always fits inside its column; if it ever does not, it grows to the LEFT. */
+.crTotalRow .crTotalValue.sapMText {
+	display: flex;
+	justify-content: flex-end;
+	white-space: nowrap;
+	max-width: none;
+	font-size: clamp(0.5125rem, 3.4cqi, 1.375rem);
+	font-variant-numeric: tabular-nums;
+}
+
+@keyframes crFlashOrangeRed {
+	0%, 100% { background-color: #e9730c; }   /* orange */
+	50%      { background-color: #bb0000; }   /* red    */
+}
+.crPriorityChip[data-priority="Very High"],
+.crPriorityChip[data-priority="High"] {
+	padding: 0.15rem 0.6rem;  border-radius: 1rem;  font-weight: bold;
+}
+.crPriorityChip[data-priority="Very High"] .sapMObjStatusText,
+.crPriorityChip[data-priority="Very High"] .sapMObjStatusIcon,
+.crPriorityChip[data-priority="High"] .sapMObjStatusText,
+.crPriorityChip[data-priority="High"] .sapMObjStatusIcon { color: #fff; }
+
+.crPriorityChip[data-priority="Very High"] { animation: crFlashOrangeRed 0.6s ease-in-out infinite; }
+.crPriorityChip[data-priority="High"]     { animation: crFlashOrangeRed 1.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .crPriorityChip { animation: none !important; } }
+
+
+@keyframes crFlashTextColor {
+	0%, 100% { color: var(--sapTextColor, #32363a); }   /* default text colour */
+	35%      { color: #e9730c; }                         /* orange */
+	70%      { color: #bb0000; }                         /* red */
+}
+.crPriorityText[data-priority="Very High"] { animation: crFlashTextColor 1.2s ease-in-out infinite; }
+.crPriorityText[data-priority="High"]     { animation: crFlashTextColor 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+	.crPriorityText[data-priority="Very High"] { animation: none; color: #bb0000; }
+	.crPriorityText[data-priority="High"]     { animation: none; color: #e9730c; }
+}
+
 /* Approval comment thread */
 .crCommentList .sapMFeedListItem {
 	padding: 0.5rem 0;
