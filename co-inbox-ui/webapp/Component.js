@@ -40,8 +40,8 @@ sap.ui.define(
 
           // set the device model
           this.setModel(models.createDeviceModel(), "device");
-          "approverProgress"
-          this.setModel(new sap.ui.model.json.JSONModel({ steps: [] }), "approverProgress");
+          this.setModel(new JSONModel({ steps: [] }), "approverProgress");
+          this.setModel(new JSONModel({ items: [], busy: false, error: "" }), "att");
           this._setTaskModels();
           this._setUiModels();
 
@@ -119,7 +119,7 @@ sap.ui.define(
             let oSteps = aph.buildModel(this._sInboundContext);
             this.getModel("approverProgress").setProperty("/steps", oSteps);
             //  console.log("Context model data:", taskContextModel.getData());
-            this.getEventBus().publish("pdfPreviewChannel", "setPdfSource", { changeRequestNo: this._sInboundContext.changeRequestNo });
+            this.getEventBus().publish("approvalUIControllerChannel", "loadViewData", { changeRequestNo: this._sInboundContext.changeRequestNo });
           }.bind(this));
           taskContextModel.attachRequestFailed(function (oEvent) {
             console.log("Context model failed to load:", oEvent.getParameters());

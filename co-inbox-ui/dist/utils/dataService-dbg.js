@@ -13,8 +13,8 @@
  *08/11/2026 |SVASAMSETTI   |     |Initial creation
  ***************************************************************/
 sap.ui.define(
-    ["sap/ui/core/Core", "./MessageParser", "./Tool"],
-    function (core, mp, util) {
+    ["sap/ui/core/Core", "sap/ui/model/Filter","sap/ui/model/FilterOperator","./MessageParser", "./Tool"],
+    function (core,Filter,FilterOperator, mp, util) {
         "use strict";
 
         return {
@@ -39,6 +39,30 @@ sap.ui.define(
                 });
             },
 
+            /* =========================================================== */
+            /* Validation & Lookup                                         */
+            /* =========================================================== */
+
+            /**
+             * Product Search.
+             *
+             * @param {object} vc - View controller reference
+             * @param {string} gtin - UPC / GTIN value
+             */
+            readAttachments: async function (vc, changeOrderId) {
+                return new Promise(function (resolve, reject) {
+                    let oModel = vc.getOwnerComponent().getModel();
+                    oModel.read(`/attachmentSet`, {
+                        filters: [new Filter("IssueID", FilterOperator.EQ, changeOrderId)],
+                        success: function (oData) {
+                            resolve(oData.results);
+                        },
+                        error: function (oError) {
+                            reject(mp.ParseError(oError));
+                        }
+                    });
+                });
+            },
 
             /* =========================================================== */
             /* Validation & Lookup                                         */
@@ -259,7 +283,7 @@ sap.ui.define(
                             actionType: isApproved ? 'A' : 'R',
                             actionVal: currentApprover.activityKey,
                             comments: comments,
-                            isFinal : currentApprover.isFinal
+                            isFinal: currentApprover.isFinal
                         },
                         success: function (data, response) {
                             if (currentApprover.isFinal) {

@@ -139,8 +139,8 @@
 	35%      { color: #e9730c; }                         /* orange */
 	70%      { color: #bb0000; }                         /* red */
 }
-.crPriorityText[data-priority="Very High"] { animation: crFlashTextColor 1.2s ease-in-out infinite; }
-.crPriorityText[data-priority="High"]     { animation: crFlashTextColor 2.4s ease-in-out infinite; }
+.crPriorityText[data-priority="Very High"] { animation: crFlashTextColor 1.0s ease-in-out infinite; }
+.crPriorityText[data-priority="High"]     { animation: crFlashTextColor 2.0s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
 	.crPriorityText[data-priority="Very High"] { animation: none; color: #bb0000; }
 	.crPriorityText[data-priority="High"]     { animation: none; color: #e9730c; }
@@ -222,5 +222,12 @@
 }
 .crCostLine {
 	padding: 0 0.5rem 0.5rem 0.5rem;
+}
+.sapMPanel.crAttachPanel .sapMTB.sapMPanelHeaderTB { padding-left: calc(1rem - 4px); }
+
+
+/* Attachments panel (sits above Cost Breakdown, same card look) */
+.crAttachPanel.sapMPanel {
+	margin-bottom: 0.75rem;
 }
  

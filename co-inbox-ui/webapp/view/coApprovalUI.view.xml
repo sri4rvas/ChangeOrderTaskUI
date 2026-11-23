@@ -186,8 +186,35 @@
 							</f:content>
 						</f:SimpleForm>
 
-						<!-- Cost breakdown -->
-	
+
+					<!-- Attachments -->
+						<Panel headerText="{i18n>secAttachments}" class="crCostPanel crAttachPanel">
+							<headerToolbar>
+								<OverflowToolbar>
+									<Title text="{i18n>secAttachments}"/>
+									<ToolbarSpacer/>
+									<Button icon="sap-icon://refresh" type="Transparent"
+										tooltip="{i18n>btnRefreshAttachments}" enabled="{= !${att>/busy} }"
+										press=".onRefreshAttachments"/>
+								</OverflowToolbar>
+							</headerToolbar>
+							<Table items="{ path: 'att>/items' }" busy="{att>/busy}" noDataText="{i18n>attNone}" class="crAttachTable">
+								<columns>
+									<Column><Text text="{i18n>attName}"/></Column>
+									<Column width="38%"><Text text="{i18n>attDocType}"/></Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Link text="{att>AlternativeName}" press=".onAttachmentPress" wrapping="true"/>
+											<Text text="{att>MimecodeDesc}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</Panel>
+
+						<!-- Cost breakdown -->	
 					<Panel headerText="{i18n>secCost}" class="crCostPanel">
 							<!-- Section 1: product lines  (label | Actual Qty | Tons | Cost) -->
 							<VBox class="crCostSection" visible="{ path: 'context>/costBreakdown/productLines', formatter: '.formatter.anyLineHasValue' }">
